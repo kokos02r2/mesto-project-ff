@@ -1,7 +1,7 @@
 {
   "name": "mesto-project-ff",
   "version": "1.0.0",
-  "description": "Спринт 5. Проектная работа Mesto",
+  "description": "Спринт 6. Проектная работа Mesto",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
