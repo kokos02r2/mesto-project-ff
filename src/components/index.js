@@ -1,7 +1,7 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
 import { openModal, closeModal } from './modal.js';
-import { createCard, deleteCard, handleLikeCard, handleImageClick } from './card.js';
+import { createCard, deleteCard } from './card.js';
 
 const cardsContainer = document.querySelector('.places__list');
 const popupEditProfile = document.querySelector('.popup_type_edit');
@@ -22,6 +22,21 @@ const addFormElement = popupAddCard.querySelector('.popup__form');
 const placeNameInput = addFormElement.querySelector('.popup__input_type_card-name');
 const linkInput = addFormElement.querySelector('.popup__input_type_url');
 
+function handleLikeCard(likeButton) {
+    likeButton.classList.toggle('card__like-button_is-active');
+}
+
+function handleImageClick(imageSrc, imageAlt) {
+    const popupImageElement = popupImage.querySelector('.popup__image');
+    const popupCaption = popupImage.querySelector('.popup__caption');
+
+    popupImageElement.src = imageSrc;
+    popupImageElement.alt = imageAlt;
+    popupCaption.textContent = imageAlt;
+
+    openModal(popupImage);
+}
+
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
     profileTitle.textContent = nameInput.value;
@@ -41,10 +56,7 @@ editFormElement.addEventListener('submit', handleProfileFormSubmit);
 addFormElement.addEventListener('submit', handleAddCardFormSubmit);
 
 function renderCard(cardData) {
-    const cardElement = createCard(cardData, deleteCard, handleLikeCard, (imageSrc, imageAlt) => {
-        handleImageClick(imageSrc, imageAlt, popupImage);
-        openModal(popupImage);
-    });
+    const cardElement = createCard(cardData, deleteCard, handleLikeCard, handleImageClick);
     cardsContainer.prepend(cardElement);
 }
 

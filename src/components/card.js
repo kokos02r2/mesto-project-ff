@@ -21,16 +21,3 @@ export function createCard(cardData, deleteCallback, likeCallback, imageClickCal
 export function deleteCard(cardElement) {
     cardElement.remove();
 }
-
-export function handleLikeCard(likeButton) {
-    likeButton.classList.toggle('card__like-button_is-active');
-}
-
-export function handleImageClick(imageSrc, imageAlt, popupImage) {
-    const popupImageElement = popupImage.querySelector('.popup__image');
-    const popupCaption = popupImage.querySelector('.popup__caption');
-
-    popupImageElement.src = imageSrc;
-    popupImageElement.alt = imageAlt;
-    popupCaption.textContent = imageAlt;
-}
