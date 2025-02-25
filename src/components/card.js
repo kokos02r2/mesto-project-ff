@@ -21,3 +21,7 @@ export function createCard(cardData, deleteCallback, likeCallback, imageClickCal
 export function deleteCard(cardElement) {
     cardElement.remove();
 }
+
+export function handleLikeCard(likeButton) {
+    likeButton.classList.toggle('card__like-button_is-active');
+}

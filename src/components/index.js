@@ -1,7 +1,7 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
 import { openModal, closeModal } from './modal.js';
-import { createCard, deleteCard } from './card.js';
+import { createCard, deleteCard, handleLikeCard } from './card.js';
 
 const cardsContainer = document.querySelector('.places__list');
 const popupEditProfile = document.querySelector('.popup_type_edit');
@@ -10,6 +10,7 @@ const popupImage = document.querySelector('.popup_type_image');
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const closeButtons = document.querySelectorAll('.popup__close');
+const popups = document.querySelectorAll('.popup');
 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
@@ -21,10 +22,6 @@ const descriptionInput = editFormElement.querySelector('.popup__input_type_descr
 const addFormElement = popupAddCard.querySelector('.popup__form');
 const placeNameInput = addFormElement.querySelector('.popup__input_type_card-name');
 const linkInput = addFormElement.querySelector('.popup__input_type_url');
-
-function handleLikeCard(likeButton) {
-    likeButton.classList.toggle('card__like-button_is-active');
-}
 
 function handleImageClick(imageSrc, imageAlt) {
     const popupImageElement = popupImage.querySelector('.popup__image');
@@ -61,13 +58,18 @@ function renderCard(cardData) {
 }
 
 function renderInitialCards(cards) {
-    cards.forEach(renderCard);
+    cards.forEach((cardData) => {
+        const cardElement = createCard(cardData, deleteCard, handleLikeCard, handleImageClick);
+        cardsContainer.append(cardElement);
+    });
 }
 
-document.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup')) {
-        closeModal(evt.target);
-    }
+popups.forEach((popup) => {
+    popup.addEventListener("mousedown", (evt) => {
+        if (evt.target.classList.contains("popup")) {
+            closeModal(popup);
+        }
+    });
 });
 
 editButton.addEventListener('click', () => {
