@@ -44,7 +44,7 @@ function handleProfileFormSubmit(evt) {
 function handleAddCardFormSubmit(evt) {
     evt.preventDefault();
     const newCardData = { name: placeNameInput.value, link: linkInput.value };
-    renderCard(newCardData);
+    cardsContainer.prepend(renderCard(newCardData)); // Используем renderCard и добавляем элемент здесь
     closeModal(popupAddCard);
     addFormElement.reset();
 }
@@ -52,15 +52,16 @@ function handleAddCardFormSubmit(evt) {
 editFormElement.addEventListener('submit', handleProfileFormSubmit);
 addFormElement.addEventListener('submit', handleAddCardFormSubmit);
 
+// Исправленная функция renderCard - только создаёт и возвращает элемент
 function renderCard(cardData) {
     const cardElement = createCard(cardData, deleteCard, handleLikeCard, handleImageClick);
-    cardsContainer.prepend(cardElement);
+    return cardElement;
 }
 
+// Исправленная функция renderInitialCards - использует renderCard
 function renderInitialCards(cards) {
     cards.forEach((cardData) => {
-        const cardElement = createCard(cardData, deleteCard, handleLikeCard, handleImageClick);
-        cardsContainer.append(cardElement);
+        cardsContainer.append(renderCard(cardData));
     });
 }
 
